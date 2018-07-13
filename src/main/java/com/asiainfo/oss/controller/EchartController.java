@@ -1,0 +1,117 @@
+package com.asiainfo.oss.controller;
+
+import com.asiainfo.dto.*;
+import com.asiainfo.oss.entity.NE_STATE;
+import com.asiainfo.oss.entity.PC;
+import com.asiainfo.oss.entity.WO_CRM;
+import com.asiainfo.oss.service.NeService;
+import com.asiainfo.oss.service.PcService;
+import com.asiainfo.oss.service.WoService;
+import com.asiainfo.oss.utils.EdUtils;
+import com.sun.scenario.effect.impl.prism.PrImage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+@Controller
+public class EchartController {
+
+    @Autowired
+    private  NeService neService;
+
+    @Autowired
+    private  WoService woService;
+
+    @Autowired
+    private  PcService pcService;
+
+    @RequestMapping("getsucess" )
+    @ResponseBody()
+    public List<SucRestful> getSucess(){
+        List<NE_STATE> rate=neService.getSucess();
+        List<SucRestful> result =new ArrayList<SucRestful>();
+        for (NE_STATE ne_state:rate){
+            SucRestful sucRestful=new SucRestful(ne_state.getNAME(),ne_state.getSUCESS());
+            result.add(sucRestful);
+        }
+        return  result;
+
+}
+
+   @RequestMapping("getRate")
+    @ResponseBody()
+    public   List<RateRestful>  getRate(){
+       List<NE_STATE> rate=neService.getRate();
+       List<RateRestful> result =new ArrayList<RateRestful>();
+       for (NE_STATE ne_state:rate){
+           RateRestful rateRestful=new RateRestful(ne_state.getNAME(),ne_state.getRATE());
+           result.add(rateRestful);
+       }
+       return  result;
+
+   }
+
+   @RequestMapping("getConnections")
+    @ResponseBody()
+   public  List<Conrestful> getConnection(){
+       List<NE_STATE> connect = neService.getConnect();
+       List<Conrestful> result =new ArrayList<Conrestful>();
+       for (NE_STATE ne_state:connect){
+           Conrestful conrestful=new Conrestful(ne_state.getNAME(),ne_state.getCONNECTIONS(),ne_state.getUPPER_LIMIT());
+           result.add(conrestful);
+
+       }
+       return  result;
+
+
+   }
+
+
+   @RequestMapping("getCpu")
+    @ResponseBody()
+    public  List<CpuRestful>  getCpu(){
+        List<PC> cpu = pcService.getCpu();
+       ArrayList<CpuRestful> result = new ArrayList<>();
+       for (PC  pc:  cpu){
+           CpuRestful cpuRest = new CpuRestful(pc.getIP(), pc.getCPU_AMOUNT());
+           result.add(cpuRest);
+           System.out.println(cpuRest.toString());
+
+       }
+       return  result;
+
+
+   }
+   @RequestMapping("getMemory")
+    @ResponseBody()
+    public  List<MeRestful> getMemory(){
+         List<PC> memroy = pcService.getMemroy();
+         ArrayList<MeRestful> result = new ArrayList<>();
+         for (PC pc:memroy){
+             MeRestful meRestful = new MeRestful(pc.getIP(), pc.getMEMORY_AMOUNT());
+             result.add(meRestful);
+         }
+         return  result;
+
+     }
+
+
+
+ /*    @RequestMapping()
+     @ResponseBody()
+     public  List<WO_CRM> getCRM(){
+
+
+
+
+
+     }
+
+*/
+
+
+
+}

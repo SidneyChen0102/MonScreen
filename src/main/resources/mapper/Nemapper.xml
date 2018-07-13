@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asiainfo.oss.dao.NeDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <!--查询网元处理速率-->
+    <select id="getRate" resultType="com.asiainfo.oss.entity.NE_STATE">
+       SELECT  NAME,RATE FROM  CFG_NE_STATE
+    </select>
+
+   <!--查询网元工单处理成功率，数据取法存疑-->
+    <select id="getSucess"  resultType="com.asiainfo.oss.entity.NE_STATE">
+
+        SELECT
+             NAME,SUCESS
+        FROM
+            CFG_NE_STATE
+
+
+    </select>
+    
+    <!--查询网元连接数，其中，不可连接用0表示-->
+    <select id="getConnection"  resultType="com.asiainfo.oss.entity.NE_STATE">
+            SELECT
+             NAME,CONNECTIONS
+             FROM
+            CFG_NE_STATE
+
+
+   </select>
+
+
+</mapper>

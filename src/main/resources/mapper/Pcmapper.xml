@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asiainfo.oss.dao.PCDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap type="com.asiainfo.oss.entity.PC" id="BaseResultMap">
+      <id column="IP" property="IP" jdbcType="VARCHAR" />
+      <result column="PC_NAME" property="PC_NAME" jdbcType="VARCHAR" />
+       <result column="CPU_AMOUNT" property="CPU_AMOUNT" jdbcType="INTEGER" />
+     </resultMap>
+    <select id="getCpu" resultType="com.asiainfo.oss.entity.PC">
+      select  *
+       FROM
+       CFG_PC
+    </select>
+
+    <select id="getMemroy" resultType="com.asiainfo.oss.entity.PC">
+        select *
+         FROM
+         CFG_PC
+    </select>
+</mapper>

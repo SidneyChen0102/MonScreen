@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asiainfo.oss.dao.WoDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <!--查询crm表所有信息-->
+    <select id="getCrm" resultType="com.asiainfo.oss.entity.WO_CRM">
+         SELECT
+            *
+        FROM
+            CFG_WO_CRM
+    </select>
+    <!--查询数指工单表所以信息-->
+    <select id="getNea"  resultType="com.asiainfo.oss.entity.WO_NEA">
+         SELECT
+         *
+         FROM
+
+           CFG_WO_NEA
+
+
+
+    </select>
+    <!--查询联指工单表所有信息-->
+    <select id="getOlc"   resultType="com.asiainfo.oss.entity.WO_OLC">
+       SELECT
+       *
+       FROM
+       CFG_WO_OLC
+
+
+    </select>
+
+   <!--查询数指联指CRM工单的处理时长-->
+    <select id="getTime"  resultType="com.asiainfo.oss.entity.WO_TIME">
+        SELECT
+        *
+        FROM
+        CFG_WO_TIME
+
+
+    </select>
+ </mapper>
+
