@@ -15,19 +15,15 @@
 
     <jsp:include page="wo_nea.jsp"></jsp:include>
 
-
+   <div>
     <jsp:include page="wo_olc.jsp"></jsp:include>
-
+    </div>
     <jsp:include page="wo_nea.jsp"></jsp:include>
 
     <div>
     <jsp:include page="ne_sucess.jsp"></jsp:include>
     </div>
 
-    <div>
-    <jsp:include page="ne_rate.jsp"></jsp:include>
-
-    </div>
 </head>
 <body>
 

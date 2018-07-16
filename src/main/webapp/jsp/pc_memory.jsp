@@ -17,28 +17,56 @@
 
     $(document).ready(function(){
 
-        sucess()
+        cpu();
     });
-    function sucess(){
+    function cpu(){
         var myChart = echarts.init(document.getElementById('main'));
         // 显示标题，图例和空的坐标轴
         myChart.setOption({
             title: {
-                text: '网元处理工单成功率'
+                text: '内存性能监控'
             },
-            tooltip: {},
+            tooltip: {
+                trigger:'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
             legend: {
-                data: ['网元工单处理率']
+                data: ['内存使用率','内存总量']
             },
             xAxis: {
                 data: []
             },
             yAxis: {},
             series: [{
-                name: '网元处理成功率',
+                name: '内存使用率',
                 type: 'bar',
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{b}\n{c}'
+                        }
+                    }
+                },
                 data: []
-            }],
+
+
+            }
+
+
+            ],
             toolbox: {
                 show: true,
                 feature: {
@@ -68,11 +96,10 @@
 
         var names = [];    //类别数组（实际用来盛放X轴坐标值）
         var nums = [];    //成功率数组（实际用来盛放Y坐标值）
-//console.log(${pageContext.request.contextPath});
         $.ajax({
             type: "post",
             async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-            url: "${pageContext.request.contextPath}/getsucess",    //请求发送到TestServlet处
+            url: "${pageContext.request.contextPath}/getMemory",    //请求发送到TestServlet处
             data: {},
             dataType: "json",        //返回数据形式为json
             success: function (result) {
@@ -81,8 +108,8 @@
 
                 if (result) {
                     for (var i = 0; i < result.length; i++) {
-                        names.push(result[i].name);    //挨个取出类别并填入类别数组
-                        nums.push(result[i].sucess);    //挨个取出销量并填入销量数组
+                        names.push(result[i].ip);    //挨个取出类别并填入类别数组
+                        nums.push(result[i].memory);    //挨个取出销量并填入销量数组
                     }
                     myChart.hideLoading();    //隐藏加载动画
                     myChart.setOption({        //加载数据图表
@@ -105,6 +132,7 @@
                 myChart.hideLoading();
             }
         })
+
     }
 </script>
 </body>

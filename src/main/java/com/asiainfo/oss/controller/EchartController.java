@@ -1,19 +1,13 @@
 package com.asiainfo.oss.controller;
 
 import com.asiainfo.dto.*;
-import com.asiainfo.oss.entity.NE_STATE;
-import com.asiainfo.oss.entity.PC;
-import com.asiainfo.oss.entity.WO_CRM;
+import com.asiainfo.oss.entity.*;
 import com.asiainfo.oss.service.NeService;
 import com.asiainfo.oss.service.PcService;
 import com.asiainfo.oss.service.WoService;
-import com.asiainfo.oss.utils.EdUtils;
-import com.sun.scenario.effect.impl.prism.PrImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 @Controller
@@ -31,9 +25,9 @@ public class EchartController {
     @RequestMapping("getsucess" )
     @ResponseBody()
     public List<SucRestful> getSucess(){
-        List<NE_STATE> rate=neService.getSucess();
+        List<NE_STATE> sucess=neService.getSucess();
         List<SucRestful> result =new ArrayList<SucRestful>();
-        for (NE_STATE ne_state:rate){
+        for (NE_STATE ne_state:sucess){
             SucRestful sucRestful=new SucRestful(ne_state.getNAME(),ne_state.getSUCESS());
             result.add(sucRestful);
         }
@@ -78,7 +72,7 @@ public class EchartController {
        for (PC  pc:  cpu){
            CpuRestful cpuRest = new CpuRestful(pc.getIP(), pc.getCPU_AMOUNT());
            result.add(cpuRest);
-           System.out.println(cpuRest.toString());
+
 
        }
        return  result;
@@ -100,18 +94,61 @@ public class EchartController {
 
 
 
- /*    @RequestMapping()
+     @RequestMapping("getCRM")
      @ResponseBody()
-     public  List<WO_CRM> getCRM(){
+     public  List<CrmRestful> getCRM(){
+         List<WO_CRM> crm = woService.getCrm();
+         ArrayList<CrmRestful> result = new ArrayList<>();
+         for (WO_CRM wo_crm:crm){
+             CrmRestful crmRestful = new CrmRestful(wo_crm.getCRM_AMOUNT(),wo_crm.getCRM_COMPLETE(),wo_crm.getCRM_EXCEPTION());
+             result.add(crmRestful);
 
-
-
-
+         }
+         return  result;
 
      }
 
-*/
+     @RequestMapping("getNea")
+     @ResponseBody()
+     public List<NeaRestful> getNea(){
+         List<WO_NEA> nea = woService.getNea();
+         ArrayList<NeaRestful> result = new ArrayList<>();
+         for (WO_NEA wo_nea:nea){
+             NeaRestful neaRestful = new NeaRestful(wo_nea.getNEA_AMOUNT(),wo_nea.getNEA_COMPLETE(),wo_nea.getNEA_EXCEPTION());
+             result.add(neaRestful);
 
+         }
+            return   result;
+
+     }
+
+    @RequestMapping("getOlc")
+    @ResponseBody
+    public  List<OlcRestful>  getOlc(){
+        List<WO_OLC> olc = woService.getOlc();
+        ArrayList<OlcRestful> result = new ArrayList<>();
+        for (WO_OLC wo_olc:olc){
+            OlcRestful olcRestful = new OlcRestful(wo_olc.getOLC_AMOUNT(),wo_olc.getOLC_COMPLETE(),wo_olc.getOLC_EXCEPTION());
+            result.add(olcRestful);
+        }
+         return  result;
+    }
+
+
+  @RequestMapping("getTime")
+    @ResponseBody()
+    public  List <TimeRestful>  getTime(){
+      List<WO_TIME> time = woService.getTime();
+      ArrayList<TimeRestful> timeRestfuls = new ArrayList<>();
+      for (WO_TIME wo_time:time){
+          TimeRestful timeRestful = new TimeRestful(wo_time.getCRM_TIME(),wo_time.getNEA_TIME(),wo_time.getOLC_TIME());
+          timeRestfuls.add(timeRestful);
+          System.out.println(timeRestful.toString());
+
+      }
+        return  timeRestfuls;
+
+  }
 
 
 }

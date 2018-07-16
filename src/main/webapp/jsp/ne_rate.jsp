@@ -27,19 +27,46 @@
             title: {
                 text: '网元工单处理速率'
             },
-            tooltip: {},
+            tooltip: {
+                trigger: 'axis'
+            },
             legend: {
-                data: ['网元处理速率']
+                data: ['网元1','网元2','网元3']
             },
             xAxis: {
                 data: []
             },
-            yAxis: {},
-            series: [{
-                name: '网元处理速率',
-                type: 'bar',
-                data: []
-            }],
+            yAxis: {
+
+
+
+
+            },
+            series : [
+
+                {
+                    name:'网元1',
+                    type:'line',
+                    stack: '总量',
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[]
+                }/*,
+                {
+                    name:'网元2',
+                    type:'line',
+                    stack: '总量',
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[]
+                },
+                {
+                    name:'网元3',
+                    type:'line',
+                    stack: '总量',
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[]
+                },
+*/
+            ],
             toolbox: {
                 show: true,
                 feature: {
@@ -69,7 +96,6 @@
 
         var names = [];    //类别数组（实际用来盛放X轴坐标值）
         var nums = [];    //成功率数组（实际用来盛放Y坐标值）
-//console.log(${pageContext.request.contextPath});
         $.ajax({
             type: "post",
             async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
@@ -83,7 +109,10 @@
                 if (result) {
                     for (var i = 0; i < result.length; i++) {
                         names.push(result[i].name);    //挨个取出类别并填入类别数组
-                        nums.push(result[i].rate);    //挨个取出销量并填入销量数组
+                        nums.push(result[i].rate);
+                       /* nums.push(result[i+1].rate);
+                        nums.push(result[i+2].rate);*/
+                        //挨个取出销量并填入销量数组
                     }
                     myChart.hideLoading();    //隐藏加载动画
                     myChart.setOption({        //加载数据图表
@@ -92,7 +121,7 @@
                         },
                         series: [{
                             // 根据名字对应到相应的系列
-                            name: '网元处理成功率',
+                            name: '网元工单处理速率',
                             data: nums
                         }]
                     });
